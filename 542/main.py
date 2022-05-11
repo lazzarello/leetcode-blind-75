@@ -37,6 +37,7 @@ class Solution:
         self.columns = size[1]
         col_counter = 0
         row_counter = 0
+        # lulz, didn't know about range(int)
         for row in mat:
             print(f'Row {row_counter}: {row}')
             row_distance.append(self.get_distance(row))
@@ -46,7 +47,10 @@ class Solution:
             print(f'Column {col_counter}: {c}')
             col_distance.append(self.get_distance(c))
             col_counter += 1
-        return row_distance, col_distance
+
+        result = [list(reversed(col)) for col in zip(*col_distance)]
+        return result
+        # return row_distance, col_distance
 
     '''
     def updateMatrix(self, mat: List[List[int]]) -> List[List[int]]:
@@ -75,11 +79,20 @@ def main():
     input1 = [[0,0,0],[0,1,0],[0,0,0]]
     input2 = [[0,0,0],[0,1,0],[1,1,1]]
     s = Solution()
-    result = s.updateMatrix(input2)
+    results = s.updateMatrix(input2)
     for row in range(s.rows):
-        print(f'Distance Row {row}: {result[0][row]}')
+        print(f'Distance Row {row}: {results[0][row]}')
     for col in range(s.columns):
-        print(f'Distance Column {col}: {result[1][col]}')
+        print(f'Distance Column {col}: {results[1][col]}')
+    # looks like my column distance calculation works for both test cases
+    d = results[1]
+    # rotate 90 degrees counter clockwise. Discover why those -1 argumens do something interesting.
+    # result = [[d[j][i] for j in range(len(d))] for i in range(len(d[0])-1,-1,-1)] 
+    # rotate 90 degrees clockwise. WTF does zip() do?
+    # reversed() is an iterator object that...reverses a list!
+    # zip is wacky. it's an iterable that looks like it rotates a matrix
+    # counter clockwise.
+    result = [list(reversed(col)) for col in zip(*d)]
     return result
 
 if __name__ == "__main__":
