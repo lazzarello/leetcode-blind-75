@@ -2,6 +2,8 @@ from typing import List
 # THE MINESWEEPER PROBLEM
 # this is very helpful and prolly all the info I need to work this
 # https://www.humaneer.org/blog/creating-matrices-in-python-tutorial/
+
+# This problem should be called a Breadth First Search. Not sure why yet.
 class Solution:
     def __init__(self):
         self.rows = 0
